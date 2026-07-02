@@ -74,3 +74,7 @@ public:
         for (int i = 0; i < carCount; i++) cars[i] = carArr[i]; // لادخال حجم كل سيارة في المصفوفة 
         for (int i = 0; i < spotCount; i++) spots[i] = spotArr[i];// لادخال حجم كل موقف الى المصفوفه 
     }
+
+    void openLog(const string &filename) {
+        logFile.open(filename, ios::app); // لفتح الملف الذي سنطبع فيه
+    }
