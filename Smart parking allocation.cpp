@@ -21,3 +21,19 @@ public:
         this->size = size;
     }
 };
+
+class Spot {
+public:
+    int id;
+    int size; // حجم الموقف (1 = small, 2 = medium, 3 = large)
+
+    Spot() {
+        id = 0;
+        size = 0;
+    }
+
+    Spot(int id, int size) {
+        this->id = id;
+        this->size = size;
+    }
+};
