@@ -82,3 +82,56 @@ public:
     void closeLog() {// لاقفال الملف 
         logFile.close();
     }
+
+
+    // طريقه الحل الاولى بالتراجع دون استخدام اي طرق تحسين للحل
+    // السيارات و الاماكن توضع مبدئيا بالترتيب المدخلين بيه ويتم التراجع فقط في حالة لم يناسب المكان السيارة الحالية
+    bool simpleBacktrack(int carIndex, int assign[], bool spotUsed[], Result &res) {
+        if (carIndex == carCount) {
+            return true; // هذا يقول لو انه تم ايجاد اماكن لكل السيارات عندها ارجع ترو
+        }
+
+        Car current = cars[carIndex];// فقط تخزين داخل متغير ليسهل استعمالة
+
+for (int i = 0; i < spotCount; i++) {// تجربة المواقف كلها لايجاد اموقف المناسب للسيارة الحالية
+
+    res.steps++;
+    // الطباعة داخل الملف الخارجي 
+    logFile << "Step " << res.steps
+            << ": Car " << current.id
+            << " (size " << current.size
+            << ") checking Spot "
+            << spots[i].id
+            << " (size " << spots[i].size << ")" << endl;
+
+    if (spotUsed[i]) {// اذا كان الموقع مأخوذ
+        logFile << "   Rejected -> Spot already occupied." << endl;
+        continue;
+    }
+
+    if (spots[i].size < current.size) {// اذا كان حجم الموقع اصغر من حجم السيارة
+        logFile << "   Rejected -> Spot too small." << endl;
+        continue;
+    }
+
+    logFile << "   Accepted -> Assign Car " // اذا كان الموقع مناسب
+            << current.id
+            << " to Spot "
+            << spots[i].id << endl;
+
+    assign[carIndex] = i;// يخزن الموقف في معلومات السيارة 
+    spotUsed[i] = true;// يعطي انذار ان المكان تم اخذه
+
+    if (simpleBacktrack(carIndex + 1, assign, spotUsed, res)) // الذهاب للسيارة التالية
+        return true;
+
+    logFile << "   Backtracking -> Remove Car " //  اذا احد السيارات لم تجد حل تراجع 
+            << current.id
+            << " from Spot "
+            << spots[i].id << endl;
+
+    assign[carIndex] = -1; // بعد التراجع يحذف الموقع من السيارة السابقه
+    spotUsed[i] = false;// يتيح الموقف يلي كان مأخوذ للتجربة عليه
+}
+        return false; // لما ما يكونش فيه اي مكان مناسب للسياره 
+    }
