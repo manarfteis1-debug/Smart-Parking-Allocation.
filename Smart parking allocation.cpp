@@ -66,3 +66,11 @@ private: //يحتوي هذا الكلاس على
     int spotCount;//عدد المواقف لكي لا نظطر للمرور على اكتر من العدد الموجود للمقارنه مع السيارات
 
     ofstream logFile; // لكتابة البيانات داخل ملف خارجي لكي يسهل على المبرمجات تتبعه ومعرفة ان كان الكود به خطأ
+
+public:
+    ParkingCSP(Car carArr[], int cCount, Spot spotArr[], int sCount) {
+        carCount = cCount; //لادخال عدد السيارات من المستخدم الى الدالة
+        spotCount = sCount;//لادخال عدد المواقف من المستخدم الى الدالة 
+        for (int i = 0; i < carCount; i++) cars[i] = carArr[i]; // لادخال حجم كل سيارة في المصفوفة 
+        for (int i = 0; i < spotCount; i++) spots[i] = spotArr[i];// لادخال حجم كل موقف الى المصفوفه 
+    }
