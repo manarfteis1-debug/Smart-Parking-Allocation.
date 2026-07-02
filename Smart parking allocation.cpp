@@ -78,3 +78,7 @@ public:
     void openLog(const string &filename) {
         logFile.open(filename, ios::app); // لفتح الملف الذي سنطبع فيه
     }
+
+    void closeLog() {// لاقفال الملف 
+        logFile.close();
+    }
